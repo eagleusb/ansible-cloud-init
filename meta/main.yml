@@ -1,17 +1,13 @@
 galaxy_info:
-  author: Larry Smith Jr.
-  description: An Ansible role to install/configure cloud-init
-
+  author: Larry Smith Jr., Leslie-Alexandre DENIS
+  description: Install and configure cloud-init
   license: MIT
-
-  min_ansible_version: 1.2
-
+  min_ansible_version: 2.7
   platforms:
     - name: Ubuntu
       versions:
-        - xenial
-
+        - bionic
   galaxy_tags:
     - system
-
+    - "cloud-init"
 dependencies: []
