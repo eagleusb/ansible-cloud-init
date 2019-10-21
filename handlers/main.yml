@@ -1,2 +1,25 @@
 ---
-# handlers file for ansible-cloud-init
+
+- name: "restart cloud-init service"
+  service:
+    name: "cloud-init"
+    state: restarted
+  listen: "restart all cloud-init services"
+
+- name: "restart cloud-init-local service"
+  service:
+    name: "cloud-init-local"
+    state: restarted
+  listen: "restart all cloud-init services"
+
+- name: "restart cloud-config service"
+  service:
+    name: "cloud-config"
+    state: restarted
+  listen: "restart all cloud-init services"
+
+- name: "restart cloud-final service"
+  service:
+    name: "cloud-final"
+    state: restarted
+  listen: "restart all cloud-init services"
