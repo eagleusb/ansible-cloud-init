@@ -18,8 +18,4 @@ MIT
 
 ## Author Information
 
-Larry Smith Jr.
-
--   [EverythingShouldBeVirtual](http://everythingshouldbevirtual.com)
--   [@mrlesmithjr](https://www.twitter.com/mrlesmithjr)
--   <mailto:mrlesmithjr@gmail.com>
+Forked from [mrlesmithjr/ansible-cloud-init](https://github.com/mrlesmithjr/ansible-cloud-init)
