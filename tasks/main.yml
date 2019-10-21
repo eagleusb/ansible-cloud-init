@@ -1,6 +1,44 @@
 ---
-# tasks file for ansible-cloud-init
-- include_tasks: debian.yml
-  when: ansible_os_family == "Debian"
 
-- include_tasks: config.yml
+- name: "package | install cloud-init package"
+  package:
+    name: "cloud-init"
+    state: present
+
+- name: "config | capturing cloud-init status"
+  shell: cloud-init status | cut -f2 -d':'
+  args:
+    executable: "/bin/bash"
+  register: _cloud_init_status
+
+- name: "config | displaying cloud-init status"
+  debug:
+    var: _cloud_init_status['stdout']
+
+- block:
+    - name: "config | drop default cloud-init datasources"
+      file:
+        path: "/etc/cloud/cloud.cfg.d/90_dpkg.cfg"
+        state: absent
+    - name: "config | configure main configuration cloud.cfg"
+      template:
+        src: "etc/cloud/cloud.cfg.j2"
+        dest: "/etc/cloud/cloud.cfg"
+        owner: root
+        group: root
+        mode: 0644
+    - name: "config | configure additional modules via cloud.cfg.d"
+      template:
+        src: "etc/cloud/cloud.cfg.d/{{ item.filename }}.j2"
+        dest: "/etc/cloud/cloud.cfg.d/{{ item.priority}}_{{ item.filename }}"
+        owner: root
+        group: root
+        mode: 0644
+      loop:
+        - { filename: "bootcmd.cfg", priority: "10" }
+        - { filename: "runcmd.cfg", priority: "10" }
+        - { filename: "package.cfg", priority: "20" }
+        - { filename: "ca_certificates.cfg", priority: "30" }
+        - { filename: "datasource.cfg", priority: "90" }
+        - { filename: "phone_home.cfg", priority: "90" }
+  when: cloud_init_config

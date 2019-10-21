@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+{% if %}
+ca-certs:
+  remove-defaults: <true/false>
+  trusted:
+    - <single line cert>
+    - |
+       -----BEGIN CERTIFICATE-----
+       YOUR-ORGS-TRUSTED-CA-CERT-HERE
+       -----END CERTIFICATE-----
+{% endif %}
