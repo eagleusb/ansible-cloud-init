@@ -1,13 +1,13 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 # Update apt database on first boot (run 'apt-get update').
 # Note, if packages are given, or package_upgrade is true, then
 # update will be done independent of this setting.
 #
 # Default: false
 # Aliases: apt_update
-package_update: true
-package_upgrade: true
-package_reboot_if_required: true
+package_update: {{ cloud_init_package.package_update }}
+package_upgrade: {{ cloud_init_package.package_upgrade }}
+package_reboot_if_required: {{ cloud_init_package.package_reboot_if_required }}
 
 # Install additional packages on first boot
 #
@@ -18,4 +18,4 @@ package_reboot_if_required: true
 # packages may be supplied as a single package name or as a list
 # with the format [<package>, <version>] wherein the specifc
 # package version will be installed.
-packages: []
+packages: {{ cloud_init_package.packages }}

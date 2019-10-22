@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 # phone_home: if this dictionary is present, then the phone_home
 # cloud-config module will post specified data back to the given
 # url
@@ -8,8 +8,9 @@
 #  post: all
 #  tries: 10
 #
-{% if %}
+{% if cloud_init_phone_home is defined and cloud_init_phone_home.url %}
 phone_home:
-  url: http://my.example.com/$INSTANCE_ID/
-  post: [ pub_key_dsa, pub_key_rsa, pub_key_ecdsa, instance_id ]
+  url: {{ cloud_init_phone_home.url }}
+  post: {{ cloud_init_phone_home.post }}
+  tries: {{ cloud_init_phone_home.tries }}
 {% endif %}

@@ -1,11 +1,10 @@
-# {{ ansible_managed }}
-{% if %}
+{{ ansible_managed | comment }}
+{% if cloud_init_cacerts is defined and cloud_init_cacerts.certs | length() > 0 %}
 ca-certs:
-  remove-defaults: <true/false>
-  trusted:
-    - <single line cert>
-    - |
-       -----BEGIN CERTIFICATE-----
-       YOUR-ORGS-TRUSTED-CA-CERT-HERE
-       -----END CERTIFICATE-----
+  remove-defaults: {{ cloud_init_cacerts.remove_defaults }}
+trusted:
+{% for cert in cloud_init_cacerts.certs %}
+  - |
+    {{ cert }}
+{% endfor %}
 {% endif %}

@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 # boot commands
 # default: none
 # this is very similar to runcmd, but commands run very early
@@ -10,9 +10,9 @@
 # - the INSTANCE_ID variable will be set to the current instance id.
 # - you can use 'cloud-init-per' command to help only run once
 # - [ cloud-init-per, once, mymkfs, mkfs, /dev/vdb ]
-{% if cloud_init_bootcmd is defined and cloud_init_bootcmd | length() > 0 %}
+{% if cloud_init_bootcmd is sequence() and cloud_init_bootcmd | length() > 0 %}
 bootcmd:
-{% for %}
-  - echo "foobar"
+{% for bootcmd in cloud_init_bootcmd %}
+  - {{ bootcmd }}
 {% endfor %}
 {% endif %}

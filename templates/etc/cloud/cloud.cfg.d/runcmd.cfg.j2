@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{{ ansible_managed | comment }}
 # run commands
 # default: none
 # runcmd contains a list of either lists or a string
@@ -14,9 +14,9 @@
 # any characters yaml would eat (':' can be problematic)
 # - [ wget, "http://slashdot.org", -O, /run/mydir/index.html ]
 runcmd:
-{% if cloud_init_runcmd is defined and cloud_init_runcmd | length() > 0 %}
-{% for %}
-  - echo "foobar"
+{% if cloud_init_runcmd is sequence() and cloud_init_runcmd | length() > 0 %}
+{% for runcmd in cloud_init_runcmd %}
+  - {{ runcmd }}
 {% endfor %}
 {% endif %}
 {% if cloud_init_disable %}
