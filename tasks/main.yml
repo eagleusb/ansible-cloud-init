@@ -4,6 +4,8 @@
   package:
     name: "cloud-init"
     state: present
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: "config | capturing cloud-init status"
   shell: cloud-init status | cut -f2 -d':'
@@ -16,10 +18,13 @@
     var: _cloud_init_status['stdout']
 
 - block:
-    - name: "config | drop default cloud-init datasources"
+    - name: "config | drop default cloud-init datasources and readme"
       file:
-        path: "/etc/cloud/cloud.cfg.d/90_dpkg.cfg"
+        path: "/etc/cloud/cloud.cfg.d/{{ item }}"
         state: absent
+      loop:
+        - "90_dpkg.cfg"
+        - "README"
     - name: "config | configure main configuration cloud.cfg"
       template:
         src: "etc/cloud/cloud.cfg.j2"
@@ -34,6 +39,8 @@
         owner: root
         group: root
         mode: 0644
+        backup: yes
+        trim_blocks: yes
       loop:
         - { filename: "bootcmd.cfg", priority: "10" }
         - { filename: "runcmd.cfg", priority: "10" }
