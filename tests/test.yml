@@ -3,4 +3,18 @@
   connection: local
   remote_user: root
   roles:
-    - ../../ansible-cloud-init
+    - ../ansible-cloud-init
+  vars:
+    cloud_init_config: true
+    cloud_init_disable: true
+    cloud_init_clean: true
+    cloud_init_bootcmd:
+      - echo "foobar"
+    cloud_init_runcmd:
+      - echo "foobaz"
+    cloud_init_package:
+      package_update: true
+      package_upgrade: true
+      package_reboot_if_required: true
+      packages:
+        - vim
