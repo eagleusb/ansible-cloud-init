@@ -53,13 +53,23 @@ cloud_final_modules:
   - final-message
   - power-state-change
 
+# type: list
+# descr: list of users to add
+# see https://cloudinit.readthedocs.io/en/latest/topics/examples.html#including-users-and-groups
+cloud_init_users:
+  - default
+
+# type: list
+# descr: list of groups to add
+#
+cloud_init_groups: []
+
 # type: dict
 # descr: main cloud-init configuration (cloud.cfg)
 # see https://cloudinit.readthedocs.io/en/latest/topics/examples.html
 cloud_init_configuration:
-  groups: []
-  users:
-    - default
+  groups: "{{ cloud_init_groups | default([]) }}"
+  users: "{{ cloud_init_users | default(['default']) }}"
   disable_root: false
   preserve_hostname: false
   manage_etc_hosts: false
@@ -87,7 +97,7 @@ cloud_init_configuration:
       gecos: Ubuntu
       groups: [adm, audio, cdrom, dialout, dip, floppy, netdev, plugdev, sudo, video]
       sudo: ["ALL=(ALL) NOPASSWD:ALL"]
-      shell: /bin/bash
+      shell: "/bin/bash"
     ntp_client: auto
     paths:
         cloud_dir: /var/lib/cloud/
