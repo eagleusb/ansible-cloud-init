@@ -24,6 +24,7 @@ runcmd:
   - [ ls, -al, '/etc/cloud/' ]
   - [ systemctl, disable, 'cloud-init', 'cloud-init-local', 'cloud-config', 'cloud-final' ]
   - [ systemctl, mask, 'cloud-init', 'cloud-init-local', 'cloud-config', 'cloud-final' ]
-{% elif cloud_init_clean %}
+{% endif %}
+{% if cloud_init_clean %}
   - [ cloud-init, clean, '--logs --seed' ]
 {% endif %}
