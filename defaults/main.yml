@@ -59,11 +59,16 @@ cloud_final_modules:
 cloud_init_users:
   - default
 
+# type: list
+# descr: list of groups to add
+#
+cloud_init_groups: []
+
 # type: dict
 # descr: main cloud-init configuration (cloud.cfg)
 # see https://cloudinit.readthedocs.io/en/latest/topics/examples.html
 cloud_init_configuration:
-  groups: []
+  groups: "{{ cloud_init_groups | default([]) }}"
   users: "{{ cloud_init_users | default(['default']) }}"
   disable_root: false
   preserve_hostname: false
