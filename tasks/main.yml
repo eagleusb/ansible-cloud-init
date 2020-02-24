@@ -35,7 +35,7 @@
     - name: "config | configure additional modules via cloud.cfg.d"
       template:
         src: "etc/cloud/cloud.cfg.d/{{ item.filename }}.j2"
-        dest: "/etc/cloud/cloud.cfg.d/{{ item.priority}}_{{ item.filename }}"
+        dest: "/etc/cloud/cloud.cfg.d/{{ item.priority }}_{{ item.filename }}"
         owner: root
         group: root
         mode: 0644
@@ -49,3 +49,10 @@
         - { filename: "datasource.cfg", priority: "90" }
         - { filename: "phone_home.cfg", priority: "90" }
   when: cloud_init_config
+
+- name: "config | drop per-once scripts files"
+  template:
+    src: "etc/cloud/scripts/per-once/{{ item }}"
+    dest: "/var/lib/cloud/scripts/per-once/{{ item }}"
+    mode: 0755
+  loop: "{{ cloud_init_per_once_scripts }}"
