@@ -149,3 +149,7 @@ cloud_init_phone_home:
   url:
   post:
   tries:
+
+# type: list
+# desc: per-once scripts to drop
+cloud_init_per_once_scripts: []
