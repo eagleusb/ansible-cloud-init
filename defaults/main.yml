@@ -61,7 +61,6 @@ cloud_init_users:
 
 # type: list
 # descr: list of groups to add
-#
 cloud_init_groups: []
 
 # type: dict

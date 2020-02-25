@@ -50,9 +50,6 @@
         - { filename: "phone_home.cfg", priority: "90" }
   when: cloud_init_config
 
-- name: "config | drop per-once scripts files"
-  template:
-    src: "etc/cloud/scripts/per-once/{{ item }}"
-    dest: "/var/lib/cloud/scripts/per-once/{{ item }}"
-    mode: 0755
-  loop: "{{ cloud_init_per_once_scripts }}"
+- name: "scripts | import scripts management tasks"
+  import_tasks: "scripts.yml"
+  tags: "cloud-init::scripts"

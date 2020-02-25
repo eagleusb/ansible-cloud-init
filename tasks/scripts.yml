@@ -1,0 +1,30 @@
+---
+
+- name: "scripts | create cloud-init scripts directories"
+  file:
+    path: "/var/lib/{{ _directory }}"
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+  loop:
+    - "/var/lib/cloud"
+    - "/var/lib/cloud/scripts"
+    - "/var/lib/cloud/scripts/per-boot"
+    - "/var/lib/cloud/scripts/per-instance"
+    - "/var/lib/cloud/scripts/per-once"
+    - "/var/lib/cloud/scripts/vendor"
+  loop_control:
+    loop_var: _directory
+
+- name: "scripts | templatize per-once scripts files"
+  template:
+    src: "var/lib/cloud/scripts/per-once/{{ _per_once_script }}.j2"
+    dest: "/var/lib/cloud/scripts/per-once/{{ _per_once_script }}"
+    owner: root
+    group: root
+    mode: 0755
+  loop: "{{ cloud_init_per_once_scripts }}"
+  loop_control:
+    loop_var: _per_once_script
+  when: cloud_init_per_once_scripts | length() > 0
