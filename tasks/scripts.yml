@@ -2,7 +2,7 @@
 
 - name: "scripts | create cloud-init scripts directories"
   file:
-    path: "/var/lib/{{ _directory }}"
+    path: "{{ _directory }}"
     state: directory
     recurse: yes
     owner: root
