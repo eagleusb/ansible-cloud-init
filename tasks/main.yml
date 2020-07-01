@@ -8,7 +8,9 @@
     cache_valid_time: 3600
 
 - name: "config | capturing cloud-init status"
-  shell: cloud-init status | cut -f2 -d':'
+  shell: |
+    set -o pipefail
+    cloud-init status | cut -f2 -d':'
   args:
     executable: "/bin/bash"
   register: _cloud_init_status
