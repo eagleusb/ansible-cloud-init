@@ -99,9 +99,9 @@ cloud_init_configuration:
       shell: "/bin/bash"
     ntp_client: auto
     paths:
-        cloud_dir: /var/lib/cloud/
-        templates_dir: /etc/cloud/templates/
-        upstart_dir: /etc/init/
+      cloud_dir: /var/lib/cloud/
+      templates_dir: /etc/cloud/templates/
+      upstart_dir: /etc/init/
     package_mirrors: []
     ssh_svcname: ssh
 

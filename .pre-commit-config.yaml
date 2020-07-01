@@ -1,22 +1,21 @@
-# See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
+---
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
-    -   id: check-yaml
+      - id: check-yaml
         exclude: ^tests/host_vars/local_test/vault.yml
-    -   id: end-of-file-fixer
-    -   id: mixed-line-ending
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
         args: [--fix=lf]
-    -   id: trailing-whitespace
+      - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
--   repo: https://github.com/pre-commit/mirrors-autopep8
+  - repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v1.4.3
     hooks:
-    -   id: autopep8
--   repo: https://github.com/asottile/reorder_python_imports
+      - id: autopep8
+  - repo: https://github.com/asottile/reorder_python_imports
     rev: v1.3.5
     hooks:
-    -   id: reorder-python-imports
+      - id: reorder-python-imports
         language_version: python3
